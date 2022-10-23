@@ -1,23 +1,32 @@
 * {
     box-sizing: border-box;
   }
+
   body {
     margin-bottom: 80px;
     background-color: #c0caa3;
   }
-  #menu {
+
+  header {
+    background-color: #304a50;
+  }
+
+  .dark {
     display: grid;
+    background-color: #304a50;
+  }
+
+/*   #menu {
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 5px;
     grid-template-areas: "none home side";
     margin-bottom: 50px;
-    background-color: #304a50;
   }
   #menu a {
     padding: 30px;
     color: #c4d365;
   }
-
+/*
 .wrapper {
     display: flex;
     align-items: center;
@@ -77,4 +86,4 @@
     .box {
         margin: 20px 0px;
     }
-  }
+  } */
