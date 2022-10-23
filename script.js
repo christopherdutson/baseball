@@ -1,3 +1,24 @@
+import all_books from './book_of_mormon.js'
+
+let data = {
+  books: all_books,
+  chapters: [],
+  verses: [],
+  score: 0
+}
+
+// setChapters: function() {
+//   for(let i = 0; i < this.books.length; ++i) {
+//     this.chapters = this.chapters.concat(this.books[i].chapters);
+//   }
+// }
+
+// setVerses: function() {
+//   for(let i = 0; i < this.chapters.length; ++i) {
+//       this.verses = this.verses.concat(this.chapters[i].verses);
+//   }
+// }
+
 // document.getElementById("stockSubmit").addEventListener("click", function(event) {
 //   event.preventDefault();
 //   const value = document.getElementById("stockInput").value;
