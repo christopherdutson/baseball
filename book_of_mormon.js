@@ -34588,7 +34588,8 @@ let data = {
     chapters: [],
     verses: [],
     score: 0
-  }
+}
+let isStarting = false;
   
 function setup() {
     if(data.verses.length === 0) {
@@ -34600,10 +34601,16 @@ function setup() {
             data.verses = data.verses.concat(data.chapters[i].verses);
         }
     }
+    isStarting = true;
+}
+
+function randomVerse() {
+    let rand = Math.floor(Math.random() * data.verses.length);
+    return data.verses[rand];
 }
 
 window.onload = function() {
-setup();
+    setup();
 };
   
   
