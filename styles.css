@@ -59,12 +59,12 @@ hr {
     background-color: #333333;
 }
 
-@media (max-width: 870px) {
+@media (max-width: 450px) {
     body {
         margin: 0vh;
     }
     .message {
-        font-size: 8vw;
+        font-size: 6vh;
     }
     .scripture {
         border-radius: 0px;
