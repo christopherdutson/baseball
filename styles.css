@@ -21,7 +21,7 @@ hr {
 .message {
     padding: 5vh 0vh;
     width: 100%;
-    font-size: 45px;
+    font-size: 5vw;
     font-family: impact, fantasy;
     margin: 0%;
 }
@@ -64,7 +64,7 @@ hr {
         margin: 0vh;
     }
     .message {
-        font-size: 30px;
+        font-size: 8vw;
     }
     .scripture {
         border-radius: 0px;
