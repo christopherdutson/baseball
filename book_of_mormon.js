@@ -34677,7 +34677,7 @@ function makeDiv(name) {
     div.style.border = "var(--accent-color) solid 1px";
     div.innerHTML = name;
     div.addEventListener("click", function(event) {
-
+        checkScripture(name);
     })
     return div;
 }
@@ -34689,7 +34689,7 @@ function showGuess() {
         all_books.forEach((book) => scripture.appendChild(makeDiv(book.book)));
     }
     else {
-        for (let i in 63) {
+        for (let i = 0; i < 63; ++i) {
             scripture.appendChild(makeDiv(i));
         }
     }
