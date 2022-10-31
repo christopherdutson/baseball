@@ -34584,12 +34584,25 @@ let all_books = [{
     "lds_slug": "moro"
 }];
 
+// --------------------------------------------------------------------------------------- //
+//////////////////////////////////////// CODE ///////////////////////////////////////////////
+// --------------------------------------------------------------------------------------- //
+
 let data = {
     chapters: [],
     verses: [],
     score: 0
 }
 let isStarting = false;
+let currentVerse = undefined;
+let showBooks = true;
+let round = 0;
+let strikes = 3;
+
+function randomVerse() {
+    let rand = Math.floor(Math.random() * data.verses.length);
+    return data.verses[rand];
+}
   
 function setup() {
     if(data.verses.length === 0) {
@@ -34601,25 +34614,115 @@ function setup() {
             data.verses = data.verses.concat(data.chapters[i].verses);
         }
     }
+    round = 0;
     isStarting = true;
+    showBooks = true;
 }
 
-function randomVerse() {
-    let rand = Math.floor(Math.random() * data.verses.length);
-    return data.verses[rand];
+function setDivText(className, text) {
+    document.getElementsByClassName(className)[0].innerHTML = text;
+}
+
+function wrongGuess() {
+    strikes--;
+    if (strikes < 1) {
+        setDivText("hint", "You're out!")
+        setDivText("scripture", `The verse was ${currentVerse.reference}`);
+    }
+    else {
+        setDivText("hint", `Incorrect. You have ${strikes} strikes left.`);
+    }
+}
+
+function getBookName() {
+    return currentVerse.reference.substring(0, currentVerse.reference.lastIndexOf(" "));
+}
+
+function getChapter() {
+    let ref = currentVerse.reference;
+    return ref.substring(ref.lastIndexOf(" "), ref.lastIndexOf(":"));
+}
+
+function correctBook() {
+    showBooks = false;
+    setDivText("hint", "Correct! Now guess the chapter.");
+    showGuess();
+}
+
+function correctChapter() {
+    setDivText("hint", `Correct! You had ${strikes} strikes left`);
+    setDivText("scripture", `The verse was ${currentVerse.reference}`);
+
+}
+
+function showScripture() {
+    setDivText("scripture", currentVerse.text);
+}
+
+function checkScripture(name) {
+    if (showBooks && getBookName() === name) {
+        correctBook();
+    }
+    else if (!showBooks && getChapter() === name) {
+        correctChapter();
+    }
+    else {
+        wrongGuess();
+    }
+}
+
+function makeDiv(name) {
+    var div = document.createElement("div");
+    div.style.padding = "2vh";
+    div.style.border = "var(--accent-color) solid 1px";
+    div.innerHTML = name;
+    div.addEventListener("click", function(event) {
+
+    })
+    return div;
+}
+
+function showGuess() {
+    let scripture = document.getElementsByClassName("scripture")[0];
+    scripture.innerHTML = "";
+    if (showBooks) {
+        all_books.forEach((book) => scripture.appendChild(makeDiv(book.book)));
+    }
+    else {
+        for (let i in 63) {
+            scripture.appendChild(makeDiv(i));
+        }
+    }
+}
+
+function setButtons() {
+    document.getElementById("guess-button").addEventListener("click", function(event) {
+        showGuess();
+    });
+    document.getElementById("scripture-button").addEventListener("click", function(event) {
+        showScripture();
+    });
+}
+
+function newRound() {
+    currentVerse = randomVerse();
+    showBooks = true;
+    round++;
+    strikes = 3;
+    setDivText("hint", `Round ${round}. ${strikes} strikes left.`);
+    showScripture();
+    setButtons();
 }
 
 window.onload = function() {
     setup();
+    document.getElementById("nameInput").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        newRound();
+    }
+});
 };
-  
-  
-  // document.getElementById("stockSubmit").addEventListener("click", function(event) {
-  //   event.preventDefault();
-  //   const value = document.getElementById("stockInput").value;
-  //   if (value === "")
-  //     return;
-  //   console.log(value);
   
   //   data() {
   //     return {
@@ -34639,10 +34742,6 @@ window.onload = function() {
   //     }
   //   },
   //   methods: {
-  //     randomVerse() {
-  //         let rand = Math.floor(Math.random() * 6604);
-  //         return this.$root.$data.verses[rand];
-  //     },
   //     startGame() {
   //       this.isStarting = false;
   //       this.isFinished = false;
@@ -34701,17 +34800,7 @@ window.onload = function() {
   //         }
   //       }
   //     },
-  //     async saveScore() {
-  //       try {
-  //         let r1 = await axios.post('/api/scores', {
-  //           username: this.enterName,
-  //           score: this.correctRounds,
-  //         });
-  //         this.addScore = r1.data;
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     },
+
   //     finishRound() {
   //       ++this.totalRounds;
   //       this.showNext = true;
