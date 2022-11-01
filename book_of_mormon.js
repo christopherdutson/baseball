@@ -34598,6 +34598,7 @@ let currentVerse = undefined;
 let showBooks = true;
 let round = 0;
 let strikes = 3;
+let buttonFunction = newRound;
 
 function randomVerse() {
     let rand = Math.floor(Math.random() * data.verses.length);
@@ -34623,14 +34624,22 @@ function setDivText(className, text) {
     document.getElementsByClassName(className)[0].innerHTML = text;
 }
 
-function wrongGuess() {
+function setButton(func, text) {
+    button = document.getElementsByClassName("button")[0];
+    button.removeEventListener("click", buttonFunction);
+    button.addEventListener("click", func);
+    button.innerHTML = text;
+    buttonFunction = func;
+}
+
+function wrongGuess(hint='') {
     strikes--;
     if (strikes < 1) {
         setDivText("hint", "You're out!")
         setDivText("scripture", `The verse was ${currentVerse.reference}`);
     }
     else {
-        setDivText("hint", `Incorrect. You have ${strikes} strikes left.`);
+        setDivText("hint", `Incorrect. ${hint}(You have ${strikes} strikes left).`);
     }
 }
 
@@ -34640,7 +34649,7 @@ function getBookName() {
 
 function getChapter() {
     let ref = currentVerse.reference;
-    return ref.substring(ref.lastIndexOf(" "), ref.lastIndexOf(":"));
+    return parseInt(ref.substring(ref.lastIndexOf(" ") + 1, ref.lastIndexOf(":")));
 }
 
 function correctBook() {
@@ -34655,16 +34664,17 @@ function correctChapter() {
 
 }
 
-function showScripture() {
-    setDivText("scripture", currentVerse.text);
-}
-
 function checkScripture(name) {
     if (showBooks && getBookName() === name) {
         correctBook();
     }
-    else if (!showBooks && getChapter() === name) {
-        correctChapter();
+    else if (!showBooks) {
+        if (getChapter() === name) {
+            correctChapter();
+        }
+        else {
+            name > getChapter() ? wrongGuess("Guess Lower! ") : wrongGuess("Guess Higher! ");
+        }
     }
     else {
         wrongGuess();
@@ -34682,135 +34692,35 @@ function makeDiv(name) {
     return div;
 }
 
-function showGuess() {
+function showGuess(event=undefined) {
     let scripture = document.getElementsByClassName("scripture")[0];
     scripture.innerHTML = "";
     if (showBooks) {
         all_books.forEach((book) => scripture.appendChild(makeDiv(book.book)));
     }
     else {
-        for (let i = 0; i < 63; ++i) {
+        for (let i = 1; i <= 63; ++i) {
             scripture.appendChild(makeDiv(i));
         }
     }
+    setButton(showScripture, "Show Scripture")
 }
 
-function setButtons() {
-    document.getElementById("guess-button").addEventListener("click", function(event) {
-        showGuess();
-    });
-    document.getElementById("scripture-button").addEventListener("click", function(event) {
-        showScripture();
-    });
+function showScripture(event=undefined) {
+    setDivText("scripture", currentVerse.text);
+    setButton(showGuess, "Guess");
 }
 
-function newRound() {
+function newRound(event=undefined) {
     currentVerse = randomVerse();
     showBooks = true;
     round++;
     strikes = 3;
     setDivText("hint", `Round ${round}. ${strikes} strikes left.`);
     showScripture();
-    setButtons();
 }
 
 window.onload = function() {
     setup();
-    document.getElementById("nameInput").addEventListener("keypress", function(event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        newRound();
-    }
-});
+    document.getElementsByClassName("button")[0].addEventListener("click", newRound);
 };
-  
-  //   data() {
-  //     return {
-  //       enterName: '',
-  //       isStarting: true,
-  //       onBook: true,
-  //       currentVerse: "",
-  //       currentBook: "",
-  //       currentChapter: "",
-  //       totalRounds: 0,
-  //       correctRounds: 0,
-  //       guessesLeft: 3,
-  //       currentRound: 9,
-  //       message: "",
-  //       showNext: false,
-  //       isFinished: false,
-  //     }
-  //   },
-  //   methods: {
-  //     startGame() {
-  //       this.isStarting = false;
-  //       this.isFinished = false;
-  //       this.totalRounds = 0;
-  //       this.correctRounds = 0;
-  //       this.currentRound = 10;
-  //       this.startRound();
-  //     },
-  //     startRound() {
-  //       this.showNext = false;
-  //       --this.currentRound;
-  //       this.message = "";
-  //       this.currentVerse = this.randomVerse();
-  //       var verse = this.currentVerse.reference;
-  //       var lastWord = verse.lastIndexOf(" ");
-  //       this.currentBook = verse.substring(0, lastWord);
-  //       var colon = verse.lastIndexOf(":");
-  //       this.currentChapter = verse.substring(lastWord + 1, colon);
-  //       this.guessesLeft = 3;
-  //       this.onBook = true;
-  //     },
-  //     checkBook(book) {
-  //       if(book === this.currentBook) {
-  //         this.message = "Correct: " + book;
-  //         this.onBook = false;
-  //       }
-  //       else {
-  //         --this.guessesLeft;
-  //         if(this.guessesLeft === 0) {
-  //           this.message = "You're Out!";
-  //           this.finishRound();
-  //         }
-  //         else {
-  //           this.message = "Not " + book;
-  //         }
-  //       }
-  //     },
-  //     checkChapter(chapter) {
-  //       var correctChapter = parseInt(this.currentChapter);
-  //       if(chapter === correctChapter) {
-  //         this.message = "Correct!";
-  //         ++this.correctRounds;
-  //         this.finishRound();
-  //       }
-  //       else {
-  //         --this.guessesLeft;
-  //         if(this.guessesLeft === 0) {
-  //           this.message = "You're out!";
-  //           this.finishRound();
-  //         }
-  //         else if (correctChapter > chapter) {
-  //           this.message = "Higher than " + chapter;
-  //         }
-  //         else {
-  //           this.message = "Lower than " + chapter;
-  //         }
-  //       }
-  //     },
-
-  //     finishRound() {
-  //       ++this.totalRounds;
-  //       this.showNext = true;
-  //       if(this.totalRounds == 9) {
-  //         this.isFinished = true;
-  //         this.saveScore();
-  //       }
-  //     },
-  //     done() {
-  //       this.isStarting = true;
-  //     }
-  //   }
-  // }  

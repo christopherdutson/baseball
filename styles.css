@@ -92,7 +92,7 @@ input {
 
 .button {
     border-radius: 25px;
-    width: 48%;
+    width: 85%;
     margin: 2vh;
     height: 60%;
     background-color: var(--primary-color);
