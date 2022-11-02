@@ -34597,6 +34597,7 @@ let isStarting = false;
 let currentVerse = undefined;
 let showBooks = true;
 let round = 0;
+let correct = 0;
 let strikes = 3;
 let buttonFunction = newRound;
 
@@ -34616,6 +34617,7 @@ function setup() {
         }
     }
     round = 0;
+    correct = 0;
     isStarting = true;
     showBooks = true;
 }
@@ -34659,9 +34661,10 @@ function correctBook() {
 }
 
 function correctChapter() {
-    setDivText("hint", `Correct! You had ${strikes} strikes left`);
+    correct++;
+    setDivText("hint", `Correct! You had ${strikes} strikes left.<br>Your score is ${correct}/${round}`);
     setDivText("scripture", `The verse was ${currentVerse.reference}`);
-
+    setButton(newRound, "Next Round");
 }
 
 function checkScripture(name) {
