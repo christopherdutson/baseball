@@ -34639,6 +34639,7 @@ function wrongGuess(hint='') {
     if (strikes < 1) {
         setDivText("hint", "Incorrect. You're out!")
         setDivText("scripture", `The verse was ${currentVerse.reference}.<br><br>Your score is ${correct}/${round}`);
+        setButton(newRound, "Next Round");
     }
     else {
         setDivText("hint", `Incorrect. ${hint}(You have ${strikes} strikes left).`);
