@@ -34637,8 +34637,8 @@ function setButton(func, text) {
 function wrongGuess(hint='') {
     strikes--;
     if (strikes < 1) {
-        setDivText("hint", "You're out!")
-        setDivText("scripture", `The verse was ${currentVerse.reference}`);
+        setDivText("hint", "Incorrect. You're out!")
+        setDivText("scripture", `The verse was ${currentVerse.reference}.<br><br>Your score is ${correct}/${round}`);
     }
     else {
         setDivText("hint", `Incorrect. ${hint}(You have ${strikes} strikes left).`);
@@ -34662,8 +34662,8 @@ function correctBook() {
 
 function correctChapter() {
     correct++;
-    setDivText("hint", `Correct! You had ${strikes} strikes left.<br>Your score is ${correct}/${round}`);
-    setDivText("scripture", `The verse was ${currentVerse.reference}`);
+    setDivText("hint", `Correct! You had ${strikes} strikes left.`);
+    setDivText("scripture", `The verse was ${currentVerse.reference}.<br><br>Your score is ${correct}/${round}`);
     setButton(newRound, "Next Round");
 }
 
