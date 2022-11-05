@@ -6,15 +6,20 @@
 
 * {
     text-align: center;
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box; 
 }
 
 body {
-    display: block;
+    height: 100vh;
+    width: 80vw;
+    display: table;
     background-color: #222222;
     color: var(--accent-color);
     font-family: 'lucida console', monospace;
     font-size: 1.6vw;
-    margin: 0px;
+    margin: 0vh 10vw;
 }
 
 .center {
@@ -23,61 +28,45 @@ body {
     align-items: center;
 }
 
-hr {
-    border-color: var(--accent-color);
+header {
+    display: table-row;
+    height: 25vh;
     width: 100%;
-    bottom: 0px;
-    margin: 0px;
-}
-
-input {
-    background-color: var(--accent-color);
 }
 
 .title {
-    padding: 2vh 0vh;
+    height: 10vh;
     width: 100%;
-    font-size: 3.5vw;
+    font-size: 6vh;
     font-family: impact, fantasy;
 }
 
-header {
-    display: block;
-    height: 30vh;
-    width: 100%;
-}
-
-.hint-wrapper {
-    height: 15vh;
-    width: 100%;
-}
-
 .hint {
-    width: 80%;
-    height: 100%;
+    height: 12vh;
+    width: 100%;
     background-color: var(--primary-color);
     border-radius: 25px;
+    width: 100%;
 }
 
 .main {
-    display: block;
-    width: 80vw;
-    height: 55vh;
-    margin: 0% 10%;
+    display: table-row;
+    width: 100%;
+    height: 100%;
 }
 
 .scripture {
-    background-color: var(--primary-color);
-    width: 70vw;
-    height: 45vh;
-    display: block;
     padding: 5vh 5vw;
+    width: 100%;
+    height: 100%;
+    display: block;
     border-radius: 25px;
+    background-color: var(--primary-color);
     overflow-y: auto;
 }
 
 .description {
-    padding-bottom: 2.5vh;
+    padding-bottom: 1.5vh;
 }
 
 .difficulty {
@@ -95,12 +84,12 @@ header {
 ::-webkit-scrollbar-thumb {
     background: var(--accent-color);
     border-radius: 10px;
-  }
+}
 
 footer {
+    display: table-row;
     width: 100%;
     height: 15vh;
-    margin: 0px;
 }
 
 .button {
@@ -114,20 +103,17 @@ footer {
 @media (max-width: 750px) {
     body {
         font-size: 3vh;
-    }
-    .main {
-        width: 90vw;
-        margin: 0vw;
+        margin: 0%;
+        width: 100vw;
     }
     .hint {
         border-radius: 0vw;
-        width: 100vw;
     }
     .title {
-        font-size: 5vh;
+        font-size: 4.3vh;
     }
     .scripture {
         border-radius: 0vw;
-        width: 90vw;
+        padding: 3vh 5vw;
     }
   }
