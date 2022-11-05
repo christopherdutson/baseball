@@ -4,82 +4,35 @@
   <title>Baseball</title>
   <meta charset="utf-8">
   <link rel="icon" href="favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <script text="type/javascript" src="book_of_mormon.js"></script>
 
-<div class="top">
+<header>
   <div class="title">BOOK OF MORMON BASEBALL</div>
-  <hr>
-</div>
-<div class="hint-wrapper">
-  <div id="hint" class="hint center">
-    Welcome to Book of Mormon Baseball!
-  </div>
-</div>
-<div id='scripture' class="scripture center">
-  How to play: <br><br>
-  A random scripture from the Book of Mormon is given.
-  Guess the correct book and chapter the verse is found in before getting 3 incorrect guesses. 
-  For each verse you guess correctly a point is added to your score. 
-  There are nine innings per game. 
-</div>
-<div class="buttons center">
-  <div class="button center">Start Game</div>
-</div>
-<!-- <div v-if="isStarting" class="wrapper">
-  <div class="name">
-    <h2>Enter your name:</h2>
-    <form class="pure-form">
-      <input v-model="enterName" />
-    </form>
-    <button type="submit" class="pure-button pure-button-primary" v-on:click="startGame">Enter</button>
-  </div>
-</div>
-
-<div v-else>
-  <div class="center">
-    <h2>Player: {{enterName}}</h2>
-    <h3>Round {{currentRound}}: You have {{guessesLeft}} strikes left</h3>
-    <h3>{{message}}</h3>
-  </div>
-  
-  <template v-if="!showNext">
-    <div class='content'>
-      <div class='box'>
-        <div class='scripture'>
-          {{currentVerse.text}}
-        </div>
-      </div>
-      <div class='box'>
-        <template v-if="onBook">
-          <div class='book' v-for="book in this.$root.$data.books" :key="book.book" v-on:click="checkBook(book.book)">{{book.book}}</div>
-        </template>
-        <template v-else>
-          <div class='book' v-for="chapter in 63" :key="chapter" v-on:click="checkChapter(chapter)">{{chapter}}</div>
-        </template>
-      </div>
+  <div class="hint-wrapper center">
+    <div id="hint" class="hint center">
+      Welcome to Book of Mormon Baseball!
     </div>
-  </template>
-  
-  <template v-else>
-    <h3 class="center">Answer: {{currentVerse.reference}}</h3>
-    <h3 class="center">Score: {{correctRounds}}/{{totalRounds}}</h3>
-    <template v-if="!isFinished">
-      <div class="nextWrapper">
-        <button type="submit" class="pure-button pure-button-primary next" v-on:click="startRound">Next</button>
-      </div>
-    </template>
-    <template v-else>
-      <div class="nextWrapper">
-        <button type="submit" class="pure-button pure-button-primary next" v-on:click="startGame">New Game</button>
-        <button type="submit" class="pure-button pure-button-primary next" v-on:click="done">Done</button>
-      </div>
-    </template>
-  </template>
-</div> -->
-  
+  </div>
+</header>
+<div class="main center">
+  <div id='scripture' class="scripture center">
+    <div class="description">
+      How to play: A random scripture from the Book of Mormon is given.
+      Guess the correct book and chapter the verse is found in before running out of guesses.
+    </div>
+    <div id='rookie' class="difficulty">Rookie: 9 Strikes per round</div>
+    <div id='pro' class="difficulty">Pro: 6 Strikes per round</div>
+    <div id='all-star' class="difficulty">All-Star: 3 Strikes per round</div>
+    <div id='flawless' class="difficulty">Flawless: 1 Strike per round</div>
+  </div>
+</div>
+<footer class="center">
+  <div class="button center">Start Game</div>
+</footer>
+
 </body>
 </html>

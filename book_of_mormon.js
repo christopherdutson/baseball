@@ -34598,7 +34598,9 @@ let currentVerse = undefined;
 let showBooks = true;
 let round = 0;
 let correct = 0;
-let strikes = 3;
+let strikes_left = 3;
+let selectedDifficulty = 'all-star';
+let difficulties = {'rookie': 9, 'pro': 6, 'all-star': 3, 'flawless': 1};
 let buttonFunction = newRound;
 
 function randomVerse() {
@@ -34634,15 +34636,20 @@ function setButton(func, text) {
     buttonFunction = func;
 }
 
+function endRound() {
+    setDivText("scripture", `The verse was ${currentVerse.reference}.<br><br>Your score is ${correct}/${round} (${(correct/round).toPrecision(2)*100}%)`);
+    setButton(newRound, "Next Round");
+}
+
 function wrongGuess(hint='') {
-    strikes--;
-    if (strikes < 1) {
+    strikes_left--;
+    if (strikes_left < 1) {
         setDivText("hint", "Incorrect. You're out!")
-        setDivText("scripture", `The verse was ${currentVerse.reference}.<br><br>Your score is ${correct}/${round}`);
-        setButton(newRound, "Next Round");
+        endRound()
     }
     else {
-        setDivText("hint", `Incorrect. ${hint}(You have ${strikes} strikes left).`);
+        plural = strikes_left > 1 ? 's' : '';
+        setDivText("hint", `Incorrect. ${hint}(You have ${strikes_left} strike${plural} left).`);
     }
 }
 
@@ -34655,29 +34662,29 @@ function getChapter() {
     return parseInt(ref.substring(ref.lastIndexOf(" ") + 1, ref.lastIndexOf(":")));
 }
 
-function correctBook() {
+function guessedCorrectBook() {
     showBooks = false;
     setDivText("hint", "Correct! Now guess the chapter.");
     showGuess();
 }
 
-function correctChapter() {
+function guessedCorrectChapter() {
     correct++;
-    setDivText("hint", `Correct! You had ${strikes} strikes left.`);
-    setDivText("scripture", `The verse was ${currentVerse.reference}.<br><br>Your score is ${correct}/${round}`);
-    setButton(newRound, "Next Round");
+    plural = strikes_left > 1 ? 's' : '';
+    setDivText("hint", `Correct! You had ${strikes_left} strike${plural} left.`);
+    endRound();
 }
 
 function checkScripture(name) {
     if (showBooks && getBookName() === name) {
-        correctBook();
+        guessedCorrectBook();
     }
     else if (!showBooks) {
         if (getChapter() === name) {
-            correctChapter();
+            guessedCorrectChapter();
         }
         else {
-            name > getChapter() ? wrongGuess("Guess Lower! ") : wrongGuess("Guess Higher! ");
+            name > getChapter() ? wrongGuess(`Lower than ${name}! `) : wrongGuess(`Higher than ${name}! `);
         }
     }
     else {
@@ -34719,12 +34726,27 @@ function newRound(event=undefined) {
     currentVerse = randomVerse();
     showBooks = true;
     round++;
-    strikes = 3;
-    setDivText("hint", `Round ${round}. ${strikes} strikes left.`);
+    strikes_left = difficulties[selectedDifficulty];
+    setDivText("hint", `Round ${round}. ${strikes_left} strikes left.`);
     showScripture();
+}
+
+function selectDifficulty(event) {
+    let prevDifficulty = document.getElementById(selectedDifficulty);
+    prevDifficulty.style.backgroundColor = "var(--primary-color)";
+    prevDifficulty.style.color = "var(--accent-color)";
+    selectedDifficulty = event.target.id;
+    event.target.style.backgroundColor = "var(--accent-color)";
+    event.target.style.color = "var(--primary-color)";
 }
 
 window.onload = function() {
     setup();
+    let startingDifficulty = document.getElementById('all-star');
+    startingDifficulty.style.backgroundColor = "var(--accent-color)";
+    startingDifficulty.style.color = "var(--primary-color)";
+    for (const [diff, s] of Object.entries(difficulties)) {
+        document.getElementById(diff).addEventListener('click', selectDifficulty);
+    }
     document.getElementsByClassName("button")[0].addEventListener("click", newRound);
 };

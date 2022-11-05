@@ -10,11 +10,11 @@
 
 body {
     display: block;
-    margin: 0vh 30vh;
     background-color: #222222;
     color: var(--accent-color);
     font-family: 'lucida console', monospace;
-    height: 100vh;
+    font-size: 1.6vw;
+    margin: 0px;
 }
 
 .center {
@@ -35,43 +35,56 @@ input {
 }
 
 .title {
-    padding: 1% 0vh;
+    padding: 2vh 0vh;
     width: 100%;
-    font-size: 4vw;
+    font-size: 3.5vw;
     font-family: impact, fantasy;
-    margin: 0%;
 }
 
-.top {
+header {
     display: block;
-    height: 15%;
+    height: 30vh;
+    width: 100%;
 }
 
 .hint-wrapper {
-    height: 15%;
+    height: 15vh;
     width: 100%;
 }
 
 .hint {
-    margin: 2vh 0vh;
-    width: 100%;
-    height: 80%;
+    width: 80%;
+    height: 100%;
     background-color: var(--primary-color);
     border-radius: 25px;
 }
 
-/* TODO: Make the title and buttons fixed, have scriptue and hint fill the middle. */
-.scripture {
+.main {
     display: block;
-    flex: 40px;
-    border-radius: 25px;
-    width: 90%;
-    height: 42vh;
+    width: 80vw;
+    height: 55vh;
+    margin: 0% 10%;
+}
+
+.scripture {
     background-color: var(--primary-color);
-    margin: 0px;
-    padding: 5%;
+    width: 70vw;
+    height: 45vh;
+    display: block;
+    padding: 5vh 5vw;
+    border-radius: 25px;
     overflow-y: auto;
-    max-height: 42vh;
+}
+
+.description {
+    padding-bottom: 2.5vh;
+}
+
+.difficulty {
+    margin: 1.5vh 0vh;
+    padding: 1vh;
+    border-radius: 25px;
+    border: var(--accent-color) solid 1px;
 }
 
 ::-webkit-scrollbar {
@@ -84,16 +97,15 @@ input {
     border-radius: 10px;
   }
 
-.buttons {
+footer {
     width: 100%;
-    height: 15%;
+    height: 15vh;
     margin: 0px;
 }
 
 .button {
     border-radius: 25px;
-    width: 85%;
-    margin: 2vh;
+    width: 80%;
     height: 60%;
     background-color: var(--primary-color);
 }
@@ -101,69 +113,21 @@ input {
 /* For Mobile */
 @media (max-width: 750px) {
     body {
-        margin: 0vh;
+        font-size: 3vh;
+    }
+    .main {
+        width: 90vw;
+        margin: 0vw;
     }
     .hint {
-        border-radius: 0px;
+        border-radius: 0vw;
+        width: 100vw;
     }
     .title {
-        font-size: 5.5vh;
+        font-size: 5vh;
     }
     .scripture {
-        border-radius: 0px;
+        border-radius: 0vw;
+        width: 90vw;
     }
   }
-/*
-.wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .name {
-    width: 40%;
-  }
-  button {
-    margin-top: 20px;
-  }
-  .next {
-    margin-right: 10px;
-  }
-  .nextWrapper {
-    display: flex;
-    justify-content: center;
-  }
-  form {
-    display: table;
-    width: 100%;
-  }
-  input {
-    display: table-cell;
-    font-size: 20px;
-    border: none !important;
-    box-shadow: none !important;
-    width: 100%;
-    height: 40px;
-  }
-  .center {
-    text-align: center;
-  }
-  .content {
-    display: flex;
-  }
-  .box {
-    flex: 40px;
-    text-align: center;
-    margin: 30px 60px;
-    border: black solid 2px;
-    background-color: white;
-    overflow-y: auto;
-    max-height: 300px;
-  }
-  .book {
-    border-bottom: black solid 1px;
-    padding: 10px;
-  }
-  .scripture {
-    padding: 30px;
-  }
- */
