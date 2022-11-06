@@ -34695,7 +34695,7 @@ function checkScripture(name) {
 function makeDiv(name) {
     var div = document.createElement("div");
     div.style.padding = "2vh";
-    div.style.border = "var(--accent-color) solid 1px";
+    div.style.border = "var(--text-color) solid 1px";
     div.innerHTML = name;
     div.addEventListener("click", function(event) {
         checkScripture(name);
@@ -34734,16 +34734,16 @@ function newRound(event=undefined) {
 function selectDifficulty(event) {
     let prevDifficulty = document.getElementById(selectedDifficulty);
     prevDifficulty.style.backgroundColor = "var(--primary-color)";
-    prevDifficulty.style.color = "var(--accent-color)";
+    prevDifficulty.style.color = "var(--text-color)";
     selectedDifficulty = event.target.id;
-    event.target.style.backgroundColor = "var(--accent-color)";
+    event.target.style.backgroundColor = "var(--text-color)";
     event.target.style.color = "var(--primary-color)";
 }
 
 window.onload = function() {
     setup();
     let startingDifficulty = document.getElementById('all-star');
-    startingDifficulty.style.backgroundColor = "var(--accent-color)";
+    startingDifficulty.style.backgroundColor = "var(--text-color)";
     startingDifficulty.style.color = "var(--primary-color)";
     for (const [diff, s] of Object.entries(difficulties)) {
         document.getElementById(diff).addEventListener('click', selectDifficulty);

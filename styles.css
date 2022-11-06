@@ -1,7 +1,8 @@
 /* Global Variables */
 :root {
     --primary-color: #333333;
-    --accent-color: #c0c0c0;
+    --text-color: #c0c0c0;
+    --accent-color: #aaff00;
 }
 
 * {
@@ -16,7 +17,7 @@ body {
     width: 80vw;
     display: table;
     background-color: #222222;
-    color: var(--accent-color);
+    color: var(--text-color);
     font-family: 'lucida console', monospace;
     font-size: 1.6vw;
     margin: 0vh 10vw;
@@ -45,6 +46,7 @@ header {
     height: 12vh;
     width: 100%;
     background-color: var(--primary-color);
+    border: var(--accent-color) solid 1px;
     border-radius: 25px;
     width: 100%;
 }
@@ -73,7 +75,7 @@ header {
     margin: 1.5vh 0vh;
     padding: 1vh;
     border-radius: 25px;
-    border: var(--accent-color) solid 1px;
+    border: var(--text-color) solid 1px;
 }
 
 ::-webkit-scrollbar {
@@ -82,7 +84,7 @@ header {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
+    background: var(--text-color);
     border-radius: 10px;
 }
 
@@ -96,7 +98,8 @@ footer {
     border-radius: 25px;
     width: 80%;
     height: 60%;
-    background-color: var(--primary-color);
+    background-color: var(--accent-color);
+    color: #222222;
 }
 
 /* For Mobile */
@@ -105,10 +108,12 @@ footer {
         font-size: 3vh;
         margin: 0%;
         width: 100vw;
-        height: 90vh;
+        height: 94vh;
     }
     .hint {
         border-radius: 0vw;
+        border: var(--primary-color) 0px solid;
+        border-bottom: var(--accent-color) 1px solid;
     }
     .title {
         font-size: 4.3vh;
