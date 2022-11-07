@@ -34601,6 +34601,7 @@ let correct = 0;
 let strikes_left = 3;
 let selectedDifficulty = 'all-star';
 let difficulties = {'rookie': 9, 'pro': 6, 'all-star': 3, 'flawless': 1};
+let accentColors = {'rookie': '#00ffff', 'pro': '#ff66cc', 'all-star': '#ff9933', 'flawless': '#aaff00'};
 let buttonFunction = newRound;
 
 function randomVerse() {
@@ -34738,6 +34739,8 @@ function selectDifficulty(event) {
     selectedDifficulty = event.target.id;
     event.target.style.backgroundColor = "var(--text-color)";
     event.target.style.color = "var(--primary-color)";
+    var r = document.querySelector(':root');
+    r.style.setProperty('--accent-color', accentColors[selectedDifficulty]);
 }
 
 window.onload = function() {
