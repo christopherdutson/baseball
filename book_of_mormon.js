@@ -34601,7 +34601,7 @@ let correct = 0;
 let strikes_left = 3;
 let selectedDifficulty = 'all-star';
 let difficulties = {'rookie': 9, 'pro': 6, 'all-star': 3, 'flawless': 1};
-let accentColors = {'rookie': '#00ffff', 'pro': '#ff66cc', 'all-star': '#ff9933', 'flawless': '#aaff00'};
+let accentColors = {'rookie': '#ff9933', 'pro': '#ff66cc', 'all-star': '#00ffff', 'flawless': '#aaff00'};
 let buttonFunction = newRound;
 
 function randomVerse() {
