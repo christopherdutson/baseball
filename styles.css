@@ -31,7 +31,7 @@ body {
 
 header {
     display: table-row;
-    height: 25vh;
+    height: 20vh;
     width: 100%;
 }
 
@@ -43,7 +43,7 @@ header {
 }
 
 .hint {
-    height: 12vh;
+    height: 8vh;
     width: 100%;
     background-color: var(--primary-color);
     border: var(--accent-color) solid 1px;
@@ -74,6 +74,14 @@ header {
 .difficulty {
     margin: 1.5vh 0vh;
     padding: 1vh;
+    border-radius: 25px;
+    border: var(--text-color) solid 1px;
+}
+
+#language {
+    margin: 1.5vh auto;
+    padding: 1vh;
+    width: 60%;
     border-radius: 25px;
     border: var(--text-color) solid 1px;
 }

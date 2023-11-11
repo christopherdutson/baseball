@@ -7,3 +7,5 @@ For each verse you guess correctly a point is added to your score.
 There are nine innings per game.
 
 https://christopherdutson.github.io/baseball/
+
+Book of Mormon json files downloaded from https://github.com/and-semakin/lds-scriptures-download/blob/master/output.
