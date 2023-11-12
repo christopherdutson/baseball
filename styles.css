@@ -14,13 +14,13 @@
 
 body {
     height: 100vh;
-    width: 80vw;
+    width: 100vw;
     display: table;
     background-color: #222222;
     color: var(--text-color);
     font-family: 'Rubik';
-    font-size: 1.9vw;
-    margin: 0vh 10vw;
+    font-size: 4vh;
+    margin: 0;
 }
 
 .center {
@@ -31,24 +31,31 @@ body {
 
 header {
     display: table-row;
-    height: 20vh;
+    height: 23vh;
     width: 100%;
 }
 
 .title {
-    height: 10vh;
+    height: 12vh;
     width: 100%;
-    font-size: 6vh;
+    font-size: 8vh;
     font-family: 'Anton';
 }
 
 .hint {
-    height: 8vh;
+    height: 10vh;
     width: 100%;
-    background-color: var(--primary-color);
-    border: var(--accent-color) solid 1px;
+    border-bottom: var(--accent-color) solid 1px;
+    border-top: var(--accent-color) solid 1px;
+}
+
+.language {
+    width: 30%;
+    margin: 1.5vh auto;
+    padding: 1vh;
     border-radius: 25px;
-    width: 100%;
+    background-color: var(--primary-color);
+    border: var(--text-color) solid 1px;
 }
 
 .main {
@@ -58,8 +65,9 @@ header {
 }
 
 .scripture {
+    margin: 0vh 10vw;
     padding: 5vh 5vw;
-    width: 100%;
+    width: 80%;
     height: 100%;
     display: block;
     border-radius: 25px;
@@ -78,14 +86,6 @@ header {
     border: var(--text-color) solid 1px;
 }
 
-#language {
-    margin: 1.5vh auto;
-    padding: 1vh;
-    width: 60%;
-    border-radius: 25px;
-    border: var(--text-color) solid 1px;
-}
-
 ::-webkit-scrollbar {
     background-color: var(--primary-color);
     width: .7vw;
@@ -98,7 +98,8 @@ header {
 
 footer {
     display: table-row;
-    width: 100%;
+    width: 80%;
+    margin: 0vh 10vw;
     height: 15vh;
 }
 
@@ -114,19 +115,21 @@ footer {
 @media (max-width: 750px) {
     body {
         font-size: 3vh;
-        margin: 0%;
-        width: 100vw;
         height: 92vh;
     }
     .hint {
-        border-radius: 0vw;
-        border: var(--primary-color) 0px solid;
-        border-bottom: var(--accent-color) 1px solid;
+        height: 9vh;
+    }
+    .language {
+        width: 45%;
+        margin: 1vh auto;
     }
     .title {
-        font-size: 4.3vh;
+        font-size: 3.5vh;
     }
     .scripture {
+        margin: 0%;
+        width: 100vw;
         border-radius: 0vw;
         padding: 3vh 5vw;
     }

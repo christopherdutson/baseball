@@ -4,9 +4,7 @@ DIVIDER = '*';
 english = {
     // Title
     'title': "BOOK OF MORMON BASEBALL",
-    'language': "Versão portuguesa",
     // Headers
-    'welcome': "Welcome to Book of Mormon Baseball!",
     'round_number': `Round ${DIVIDER}. `,
     'correct': "Correct! ",
     'guess_chapter': "Now guess the chapter.",
@@ -36,9 +34,7 @@ english = {
 portuguese = {
     // Title
     'title': 'BEISEBOL DO LIVRO DE MORMON',
-    'language': "English Version",
     // Headers
-    'welcome': "Bem-vindo ao Beisebol do Livro de Mórmon!",
     'round_number': `Vez ${DIVIDER}. `,
     'correct': "Correto! ",
     'guess_chapter': "Agora adivinhe o capítulo.",
@@ -65,4 +61,5 @@ portuguese = {
     'error': "Erro: não foi possível traduzir",
 }
 
-languageMap = {true: english, false: portuguese};
+languageMap = {'english': english, 'portuguese': portuguese};
+scriptureMap = {'english': englishBookOfMormon, 'portuguese': portugueseBookOfMormon};
