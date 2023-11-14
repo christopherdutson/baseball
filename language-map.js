@@ -28,7 +28,7 @@ english = {
     'show_scripture': "Show Scripture",
     'next_round': "Next Round",
     // Error
-    'error': "Error: unable to translate",
+    'error': "Error: unable to translate ",
 }
 
 portuguese = {
@@ -58,7 +58,7 @@ portuguese = {
     'show_scripture': "Mostra Escritura",
     'next_round': "Proxima Rodada",
     // Error
-    'error': "Erro: não foi possível traduzir",
+    'error': "Erro: não foi possível traduzir ",
 }
 
 languageMap = {'english': english, 'portuguese': portuguese};

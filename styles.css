@@ -75,6 +75,10 @@ header {
     overflow-y: auto;
 }
 
+.disabled {
+    background-color: #666666;
+}
+
 .description {
     padding-bottom: 1.5vh;
 }

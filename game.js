@@ -16,10 +16,10 @@ class Verse {
 }
 
 class BookOfMormon {
-    constructor(verses, books) {
+    constructor(verses, books, chapterMap) {
         this.verses = verses;
         this.books = books;
-        // map of book names to chapter numbers
+        this.chapterMap = chapterMap;
     }
 
     getRandomVerse() {
@@ -49,7 +49,7 @@ class Translator {
     constructor() {}
     
     get(token, options = []) {
-        const rawString = languageMap[game.language][token] ?? languageMap[game.language]['error'];
+        const rawString = languageMap[game.language][token] ?? languageMap[game.language]['error'] + token;
         if(options.length > 0) {
             let optionsIndex = 0
             let lastDivider = 0;
@@ -79,6 +79,7 @@ const difficulties = {'rookie': 9, 'pro': 6, 'all-star': 3, 'flawless': 1};
 const accentColors = {'rookie': '#ff9933', 'pro': '#ff66cc', 'all-star': '#00ffff', 'flawless': '#aaff00'};
 const textColor = "var(--text-color)";
 const primaryColor = "var(--primary-color)";
+let divList = [];
 let buttonFunction = setup;
 let translator = undefined;
 let bookOfMormon = undefined;
@@ -100,9 +101,7 @@ function makeDiv(name) {
     div.style.padding = "2vh";
     div.style.border = `${textColor} solid 1px`;
     div.innerHTML = name;
-    div.addEventListener("click", function(event) {
-        checkScripture(name);
-    })
+    div.addEventListener("click", checkScripture)
     return div;
 }
 
@@ -127,20 +126,22 @@ function newRound() {
 function setup() {
     let verses = [];
     let books = [];
+    let chapterMap = {};
     const bofmObject = scriptureMap[game.language];
-    // get chapters here too
     for (const chapterKey in bofmObject) {
         const chapter = bofmObject[chapterKey];
         const bookName = chapter.title.substring(0, chapter.title.lastIndexOf(" "));
         if (books.at(-1) != bookName) {
             books.push(bookName);
+            chapterMap[bookName] = 0;
         }
-        const chapterNumber = parseInt(chapter.title.substring(chapter.title.lastIndexOf(" ") + 1));
+        chapterMap[bookName] += 1;
+        const chapterNum = parseInt(chapter.title.substring(chapter.title.lastIndexOf(" ") + 1));
         chapter.verses.forEach((verse) => {
-            verses.push(new Verse(bookName, chapterNumber, verse.number, verse.text));
+            verses.push(new Verse(bookName, chapterNum, verse.number, verse.text));
         });
     }
-    bookOfMormon = new BookOfMormon(verses, books);
+    bookOfMormon = new BookOfMormon(verses, books, chapterMap);
     document.getElementById('hint').style.backgroundColor = primaryColor;
     newRound()
 }
@@ -158,22 +159,25 @@ function selectDifficulty(event) {
 
 ////////////////////////////////////// Scripture //////////////////////////////////////////
 
-function showScripture(event=undefined) {
+function showScripture() {
     setDivText("scripture", game.currentVerse.text);
     setButton(showGuess, translator.get('guess'));
 }
 
-function showGuess(event=undefined) {
-    let scripture = document.getElementsByClassName("scripture")[0];
-    scripture.innerHTML = "";
-    if (game.showBooks) {
-        bookOfMormon.books.forEach((book) => scripture.appendChild(makeDiv(book)));
-    }
-    else {
-        for (let i = 1; i <= 63; ++i) {
-            scripture.appendChild(makeDiv(i));
+function showGuess() {
+    if (divList.length == 0) {
+        if (game.showBooks) {
+            divList = bookOfMormon.books.map((book) => makeDiv(book));
+        }
+        else {
+            for (let i = 1; i <= bookOfMormon.chapterMap[game.currentVerse.book]; ++i) {
+                divList.push(makeDiv(i));
+            }
         }
     }
+    let scripture = document.getElementById("scripture");
+    scripture.innerHTML = "";
+    divList.forEach((div) => scripture.appendChild(div));
     setButton(showScripture, translator.get('show_scripture'))
 }
 
@@ -191,7 +195,7 @@ function strikesLeftMessage(isCorrectString, hint='') {
 function wrongGuess(hint='') {
     game.strikes_left -= 1;
     if (game.strikes_left < 1) {
-        setDivText("hint", translator.get('incorrect_final'));
+        setDivText("hint", translator.get('strike_out'));
         endRound()
     }
     else {
@@ -201,39 +205,57 @@ function wrongGuess(hint='') {
 
 function guessedCorrectBook() {
     game.showBooks = false;
+    divList = [];
     setDivText("hint", translator.get("correct") + translator.get('guess_chapter'));
     showGuess();
 }
 
 function guessedCorrectChapter() {
-    game.correct = game.correct + 1;
+    game.correct += 1;
     strikesLeftMessage('correct');
     endRound();
 }
 
-function checkScripture(guess) {
-    if (game.showBooks && game.currentVerse.book === guess) {
-        guessedCorrectBook();
+function disable(div) {
+    div.removeEventListener("click", checkScripture);
+    div.className = 'disabled';
+}
+
+function checkScripture(event) {
+    let guess = event.target.innerText;
+    if (game.showBooks) {
+        if (game.currentVerse.book === guess) {
+            guessedCorrectBook();
+        }
+        else {
+            disable(event.target);
+            wrongGuess();
+        }
     }
-    else if (!game.showBooks) {
+    else {
+        guess = parseInt(guess);
         if (game.currentVerse.chaper === guess) {
             guessedCorrectChapter();
         }
         else if (guess > game.currentVerse.chaper) {
+            for (let i = guess - 1; i < divList.length && divList[i].className != "disabled"; ++i) {
+                disable(divList[i]);
+            }
             wrongGuess(translator.get('lower_hint', [guess])); 
         }
         else {
+            for (let i = guess - 1; i >= 0 && divList[i].className != "disabled"; --i) {
+                disable(divList[i]);
+            }
             wrongGuess(translator.get('higher_hint', [guess]));
         }
-    }
-    else {
-        wrongGuess();
     }
 }
 
 ////////////////////////////////////// End Round //////////////////////////////////////////
 
 function endRound() {
+    divList = [];
     const options = [game.currentVerse.getReference(), game.correct, game.round, Math.round(100 * game.correct/game.round)];
     setDivText("scripture", translator.get('give_reference_and_score', options));
     setButton(newRound, translator.get('next_round'));
